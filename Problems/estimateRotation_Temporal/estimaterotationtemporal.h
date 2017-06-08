@@ -1,5 +1,5 @@
-#ifndef ESTIMATEROTATION_H
-#define ESTIMATEROTATION_H
+#ifndef ESTIMATEROTATIONTEMPORAL_H
+#define ESTIMATEROTATIONTEMPORAL_H
 
 #include "Manifolds/Stiefel/Stiefel.h"
 #include "Manifolds/Stiefel/StieVariable.h"
@@ -14,22 +14,22 @@ using namespace cv;
 
 /*Define the namespace*/
 namespace ROPTLIB{
-class estimateRotation:public Problem
+class estimateRotationTemporal:public Problem
 {
 public:
-    estimateRotation(Mat, Mat, int, int);
+    estimateRotationTemporal(const Mat&,const Mat&,int F, double lambda);
 
     //functions to be overloaded
     virtual double f(Variable *x) const;
     virtual void EucGrad(Variable *x, Vector *egf) const;
     virtual void EucHessianEta(Variable *x, Vector *etax, Vector *exix) const;
 
-    Mat A_,B_;
-    mutable Mat E_; //error matrix
-
-    int n_;
-    int p_;
+    Mat S_,W_,P2_;
+    int F_;
+    int lambda_;
+    std::vector<Mat> S_list_;
+    std::vector<Mat> W_list_;
 };
 };
 
-#endif // ESTIMATEROTATION_H
+#endif // ESTIMATEROTATIONTEMPORAL_H
