@@ -26,7 +26,7 @@ public:
 
     Mat A_,B_;
     mutable Mat E_; //error matrix
-    Variable *x;
+
     int n_;
     int p_;
 };
