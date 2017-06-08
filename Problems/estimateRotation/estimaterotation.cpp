@@ -60,11 +60,10 @@ void estimateRotation::EucGrad(Variable *x, Vector *egf) const{
     Mat Egrad = A_.t()*E_ ;
 
     double *egfPtr = egf->ObtainWriteEntireData();
-    for (integer i = 0; i < egf->Getlength(); i++){
 
+    for (integer i = 0; i < egf->Getlength(); i++)
         egfPtr[i] = Egrad.at<double>(i%n_,i/n_);
 
-    }
 
 }
 
@@ -74,11 +73,19 @@ void estimateRotation::EucHessianEta(Variable *x, Vector *etax, Vector *exix) co
     const double *etaxPtr= etax->ObtainReadData();
     double *exixPtr = exix->ObtainWriteEntireData();
 
-    Mat AtA = A_.t()*A_;
+    Mat Eta = Mat::zeros(n_,p_,CV_64F);
+
+    for(int c=0;c<p_;c++){
+        for(int r=0;r<n_;r++){
+            Eta.at<double>(r,c) = etaxPtr[c*n_+r];
+        }
+    }
+
+    Mat hessian_action = A_.t()*A_*Eta;
 
     for (integer i = 0; i < exix->Getlength(); i++)
     {
-        exixPtr[i] = AtA.at<double>(i%n_,i/n_);
+        exixPtr[i] = hessian_action.at<double>(i%n_,i/n_);
 //        exixPtr[i] = etaxPtr[i];
     }
 
