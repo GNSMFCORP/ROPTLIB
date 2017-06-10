@@ -86,7 +86,6 @@ void estimateRotation::EucHessianEta(Variable *x, Vector *etax, Vector *exix) co
     for (integer i = 0; i < exix->Getlength(); i++)
     {
         exixPtr[i] = hessian_action.at<double>(i%n_,i/n_);
-//        exixPtr[i] = etaxPtr[i];
     }
 
 }
