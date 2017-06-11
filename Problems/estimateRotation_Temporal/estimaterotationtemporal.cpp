@@ -17,15 +17,11 @@ estimateRotationTemporal::estimateRotationTemporal(const Mat& S,const Mat& W,int
     P2_.at<double>(0,0)=1.0;
     P2_.at<double>(1,1)=1.0;
 
-
-    std::cout << "P2:"<<P2_<<std::endl;
-    std::cout << "P2 size:"<<P2_.size()<<std::endl;
-
 }
 
 //cost function
 double estimateRotationTemporal::f(Variable *x) const{
-//    std::cout << "c2"<<std::endl;
+
     const double *xxM = x->ObtainReadData();
 
     double totalcost=0;
@@ -61,7 +57,6 @@ double estimateRotationTemporal::f(Variable *x) const{
 
 void estimateRotationTemporal::EucGrad(Variable *x, Vector *egf) const{
 
-//    std::cout << "c3"<<std::endl;
     const double *xxM = x->ObtainReadData();
     double *egfPtr = egf->ObtainWriteEntireData();
 
@@ -89,18 +84,11 @@ void estimateRotationTemporal::EucGrad(Variable *x, Vector *egf) const{
 
             }
         }
-//        std::cout << "c31"<<std::endl;
 
         Mat Gi = Mat::zeros(3,3,CV_64F);
 
         Gi = g(Range(3*i,3*(i+1)),Range(3*i,3*(i+1))).clone();
-//        int starting_index_Gi = 3*i*(F_+1);
-//        for(int c=0;c<3;c++){
-//            for(int r=0;r<3;r++){
-//                Gi.at<double>(r,c) = xxM[starting_index_Gi+r+3*c];
-//            }
-//        }
-//        std::cout << "c32"<<std::endl;
+
         Gi = Gi- P2_.t()*W_list_[i]*S_list_[i].t() +
                 (P2_.t()*P2_)*Xi*S_list_[i]*S_list_[i].t();
 
@@ -110,7 +98,7 @@ void estimateRotationTemporal::EucGrad(Variable *x, Vector *egf) const{
             Gi = Gi - lambda_*Xim1;
 
         Gi.copyTo(g(Range(3*i,3*(i+1)),Range(3*i,3*(i+1))));
-//        std::cout << "c33"<<std::endl;
+
     }
 
     for (integer i = 0; i < egf->Getlength(); i++)
@@ -127,7 +115,6 @@ void estimateRotationTemporal::EucHessianEta(Variable *x, Vector *etax, Vector *
     Mat h = Mat::zeros(3*F_,3*F_,CV_64F); //entire hessian action matrix
 
     for(int i =0;i<F_;i++){
-//        std::cout << "c36"<<std::endl;
 
         Mat Eta = Mat::zeros(3,3,CV_64F);
         int starting_index = 3*i*(F_+1);
@@ -143,7 +130,7 @@ void estimateRotationTemporal::EucHessianEta(Variable *x, Vector *etax, Vector *
         hessian_action.copyTo(h(Range(3*i,3*(i+1)),Range(3*i,3*(i+1))));
 
     }
-//    std::cout << "c38"<<std::endl;
+
     for (integer i = 0; i < exix->Getlength(); i++)
         exixPtr[i] = h.at<double>(i%(3*F_),i/(3*F_));
 
