@@ -24,26 +24,13 @@ This is the test file for the Brocokett problem defined in StieBrockett.h and St
 #include "Manifolds/Stiefel/StieVariable.h"
 #include "Manifolds/Stiefel/Stiefel.h"
 
-/*Linesearch based solvers*/
-#include "Solvers/SolversLS.h"
-#include "Solvers/RSD.h"
-#include "Solvers/RNewton.h"
-#include "Solvers/RCG.h"
-#include "Solvers/RBroydenFamily.h"
-#include "Solvers/RWRBFGS.h"
-#include "Solvers/RBFGS.h"
-#include "Solvers/LRBFGS.h"
 
 /*Trust-region based solvers*/
 #include "Solvers/SolversTR.h"
-#include "Solvers/RTRSD.h"
 #include "Solvers/RTRNewton.h"
-#include "Solvers/RTRSR1.h"
-#include "Solvers/LRTRSR1.h"
 
 /*The global head file*/
 #include "Others/def.h"
-
 
 //opencv
 #include <opencv2/core.hpp>
@@ -53,8 +40,8 @@ using namespace ROPTLIB;
 int main(void)
 {
         // choose a random seed based on current clock
-        unsigned tt = (unsigned)time(NULL);
-        genrandseed(0);
+//        unsigned tt = (unsigned)time(NULL);
+//        genrandseed(0);
 
         // size of the Stiefel manifold
         integer n = 3, p = 2;
