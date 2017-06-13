@@ -15,11 +15,13 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11 -O3 -march=native")
 
 include_directories(${OpenCV_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/cwrapper/blas ${CMAKE_CURRENT_SOURCE_DIR}/cwrapper/lapack )
 
-# Find all the cpp files
-FILE(GLOB_RECURSE source_files ${CMAKE_CURRENT_SOURCE_DIR}/Manifolds/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Others/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Problems/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Solvers/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/cwrapper/*.cpp)
 
+FILE(GLOB_RECURSE additional_source_files ${CMAKE_CURRENT_SOURCE_DIR}/cwrapper/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Others/SparseBLAS/*.cpp)
+FILE(GLOB source_files ${CMAKE_CURRENT_SOURCE_DIR}/Manifolds/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Manifolds/Stiefel/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Manifolds/Sphere/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Problems/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Problems/estimateRotation/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Problems/estimateRotation_Temporal/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Problems/SphereConvexHull/*.cpp  )
+SET(solvers ${CMAKE_CURRENT_SOURCE_DIR}/Solvers/RTRNewton.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Solvers/SolversTR.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Solvers/QuasiNewton.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Solvers/Solvers.cpp )
+SET(additional_debug_files ${CMAKE_CURRENT_SOURCE_DIR}/Others/ForDebug.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Others/randgen.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Others/Timer.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Others/MyMatrix.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Others/MinPNormConHull.cpp)
 # Libraries
-add_library(ropt STATIC ${source_files})
+add_library(ropt STATIC ${source_files} ${solvers} ${additional_source_files} ${additional_debug_files})
 
 # Mandatory for running the test example file
 add_definitions(-DTESTSIMPLEEXAMPLE)
