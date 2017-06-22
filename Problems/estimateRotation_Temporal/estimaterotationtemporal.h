@@ -17,14 +17,14 @@ namespace ROPTLIB{
 class estimateRotationTemporal:public Problem
 {
 public:
-    estimateRotationTemporal(const Mat&,const Mat&,int F, double lambda);
+    estimateRotationTemporal(const vector<Mat>&,const vector<Mat>&,int F, double lambda);
 
     //functions to be overloaded
     virtual double f(Variable *x) const;
     virtual void EucGrad(Variable *x, Vector *egf) const;
     virtual void EucHessianEta(Variable *x, Vector *etax, Vector *exix) const;
 
-    Mat S_,W_,P2_;
+    Mat P2_;
     int F_;
     int lambda_;
     std::vector<Mat> S_list_;

@@ -3,15 +3,14 @@
 /*Define the namespace*/
 namespace ROPTLIB{
 
-estimateRotationTemporal::estimateRotationTemporal(const Mat& S,const Mat& W,int F, double lambda){
+estimateRotationTemporal::estimateRotationTemporal(const vector<Mat>& S,const vector<Mat>& W,int F, double lambda){
 
-    S_ =S;
-    W_=W;
+
     lambda_=lambda;
     F_=F;
 
-    split(S_,S_list_);
-    split(W_,W_list_);
+    S_list_ = S;
+    W_list_ = W;
 
     P2_ = Mat::zeros(2,3,CV_64F);
     P2_.at<double>(0,0)=1.0;
