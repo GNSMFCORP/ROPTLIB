@@ -17,7 +17,7 @@ namespace ROPTLIB{
 class estimateRotationTemporal:public Problem
 {
 public:
-    estimateRotationTemporal(const vector<Mat>&,const vector<Mat>&,int F, double lambda);
+    estimateRotationTemporal(const std::vector<Mat>& S,const std::vector<Mat>& W,int F, double lambda);
 
     //functions to be overloaded
     virtual double f(Variable *x) const;
